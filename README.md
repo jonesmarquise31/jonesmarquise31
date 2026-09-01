@@ -43,6 +43,19 @@ monitoring notes, secrets rotation, scheduled backups, health and disk checks.
 CI that runs the test suite and then greps the codebase for retired terminology,
 so a finished migration cannot silently regress.
 
+**Delivery and infrastructure.** Custom domain on Netlify with the DNS to match:
+verification records, SPF, and mail routing, so transactional email lands in
+inboxes instead of spam. Edge routing, redirects, and per deploy preview URLs
+through `netlify.toml`, with function timeouts tuned individually from 26
+seconds up to a 900 second background window. Bundling is declared explicitly
+rather than inferred: esbuild cannot statically trace a runtime
+`require(path.join(...))`, so shared config and scoring libraries have to be
+force included or the function 502s at cold start with a module import error.
+I found that the way everyone does, from a failed checkout in production. A
+second product ships to its own separate deploy target, and the scheduled
+generation worker runs on a Hostinger VPS with cron, health checks, and its own
+backup script.
+
 **Native applications.** A pywebview desktop shell over a Python engine, bundled
 with PyInstaller into a macOS .app that a non technical user installs by
 dragging it. Playwright drives real Chrome for session capture, and no password
@@ -50,14 +63,24 @@ is ever typed or read by the program. Credentials resolve to Application Support
 when the app is frozen, because a bundled app launches with its working
 directory at root and a relative path silently loses the file.
 
+**Design systems.** A documented system rather than a stylesheet: palette, type
+scale, a 4px spacing unit, radius and elevation rules marked locked, and a page
+type matrix saying which motion is permitted where. Tokens live in one file
+whose header states the contract, that the design doc is the canonical source
+and tokens cannot change without updating it first. Semantic state colors are
+kept separate from decorative ones so an error never renders as an accent.
+Contrast ratios are documented against the background, and there is an explicit
+reduced motion policy. Constraint is the point: the rules exist so that pages
+built months apart by different methods still look like one product.
+
 **Acquisition and hot paths.** Playwright, Browserbase and AgentQL against live
 sites. In the draft engine, player availability is derived by set arithmetic
 against a cached universe rather than by polling the free agent endpoint,
 because that endpoint lags the live board by a pick or two at exactly the moment
 the lag is most expensive.
 
-Node 20, Python, Postgres, Netlify Functions, Supabase, Stripe, the Anthropic
-API, Playwright, Twilio, PyInstaller.
+Node 20, Python, Postgres, Netlify (Functions, edge, DNS), Supabase, Stripe,
+the Anthropic API, Playwright, Twilio, GSAP, PyInstaller, GitHub Actions.
 
 ---
 
