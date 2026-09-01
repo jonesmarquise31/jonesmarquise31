@@ -1,28 +1,18 @@
 # Marquise Jones
 
-Systems engineer at the Naval Health Research Center. I write about the
-extinction of the W2 layer and prepare IT professionals for what replaces it.
+I build complete AI products by myself, because I want them to exist. Not
+prototypes and not demos: a model in production generating deliverables that
+people paid for, money moving through Stripe, customer data under row level
+security, and an on call rotation of one.
 
-The argument is straightforward. The employment relationship that organized
-technical careers for two generations is being unbundled, and the people most
-exposed are the ones doing the most work: the systems administrator carrying
-engineer scope on a sysadmin title, the security analyst running architecture
-decisions without the pay band, the infrastructure lead whose contribution is
-invisible to the systems that price them. They are not underperforming. They
-are being read incorrectly by a hiring apparatus that has not been rebuilt for
-what they actually do.
-
-I write about that on [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117)
-and on Substack. This profile is the other half: the systems I build because I
-want them to exist.
+What that actually took is below.
 
 ---
 
 ## The technical work
 
-I build and operate [Workforce Radar](https://workforceradar.com), a career
-intelligence platform with paying customers. Solo, from schema to checkout to
-deploy, with nobody else on call. What that involved, concretely:
+Most of it comes out of [Workforce Radar](https://workforceradar.com), a career
+intelligence platform I built and run alone, schema to checkout to deploy.
 
 **Production LLM integration.** Claude generates paid deliverables inside
 background functions, behind Stripe checkout, for customers who paid for them.
@@ -112,7 +102,7 @@ actually had.
 ## Elsewhere
 
 - [workforceradar.com](https://workforceradar.com), the platform
-- [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117), long form on hiring systems and career strategy
+- [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117) and Substack, where I write about the extinction of the W2 layer and what replaces it
 
 None of this was commissioned. I build these because I want them to exist, and
 they tend to end up with customers anyway. If your team is working on something
