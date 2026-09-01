@@ -13,8 +13,8 @@ are being read incorrectly by a hiring apparatus that has not been rebuilt for
 what they actually do.
 
 I write about that on [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117)
-and on Substack. This profile is the other half: the technical work behind the
-argument.
+and on Substack. This profile is the other half: the systems I build because I
+want them to exist.
 
 ---
 
@@ -22,7 +22,7 @@ argument.
 
 I build and operate [Workforce Radar](https://workforceradar.com), a career
 intelligence platform with paying customers. Solo, from schema to checkout to
-deploy. What that involved, concretely:
+deploy, with nobody else on call. What that involved, concretely:
 
 **Production LLM integration.** Claude generates paid deliverables inside
 background functions, behind Stripe checkout, for customers who paid for them.
@@ -114,4 +114,6 @@ actually had.
 - [workforceradar.com](https://workforceradar.com), the platform
 - [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117), long form on hiring systems and career strategy
 
-Open to contract, partnership, and full time work. Reach me through LinkedIn.
+None of this was commissioned. I build these because I want them to exist, and
+they tend to end up with customers anyway. If your team is working on something
+shaped like it, LinkedIn is the fastest way to reach me.
