@@ -1,38 +1,80 @@
 # Marquise Jones
 
-Founder of [Workforce Radar](https://workforceradar.com) — a career intelligence platform that diagnoses how the modern hiring system reads or misreads skilled professionals.
+Systems engineer at the Naval Health Research Center. I write about the
+extinction of the W2 layer and prepare IT professionals for what replaces it.
 
-I build production AI systems at the intersection of structured data, behavioral classification, and decision support. Most of my current work is on Radar's diagnostic engine, three-portal architecture (professional, coach, hiring), and the standalone Decode entry-tier product. The dataset of 250+ classified IT, cybersecurity, and finance professionals is what powers the classification.
+The argument is straightforward. The employment relationship that organized
+technical careers for two generations is being unbundled, and the people most
+exposed are the ones doing the most work: the systems administrator carrying
+engineer scope on a sysadmin title, the security analyst running architecture
+decisions without the pay band, the infrastructure lead whose contribution is
+invisible to the systems that price them. They are not underperforming. They
+are being read incorrectly by a hiring apparatus that has not been rebuilt for
+what they actually do.
 
-This profile holds the public artifacts from that work — build notes, design-system documentation, and engineering patterns. The proprietary core stays private.
+I write about that on [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117)
+and on Substack. This profile is the other half: the technical work behind the
+argument.
 
 ---
 
-### Live products
+## What's here
 
-- **[The Radar Decode](https://radar-decode.netlify.app)** — $47 one-page operator brief, written by hand, anchored to a buyer's actual LinkedIn and resume. Entry tier of the Radar line.
-- **[Workforce Radar](https://workforceradar.com)** — career intelligence platform with paid diagnostic ($97 RDS) and full engagement ($1,497 Full System).
+**[Radar-Platform](https://github.com/jonesmarquise31/Radar-Platform)** — the
+architecture record for [Workforce Radar](https://workforceradar.com), a career
+intelligence platform I built and run. Build logs, numbered decision records,
+named engineering patterns, and the reasoning behind each. Start here if you
+want to see how I think about a system before I write it.
 
-### Recent build artifacts
+**[radar-patterns](https://github.com/jonesmarquise31/radar-patterns)** — five
+production patterns extracted from that platform: webhook signature
+verification, verify-before-write payment routing, idempotent writes under
+at-least-once delivery, deferred model generation, and request auth. Sixty
+tests, no dependencies, runs with `npm test`. This is the implementation half of
+Radar-Platform's architecture half.
 
-- **[V41 build log](https://github.com/jonesmarquise31/Radar-Platform/blob/main/build-log/v41-radar-decode.md)** — the Decode launch: standalone deploy on a separate domain, post-payment intake flow, real-time buy alerts via Stripe webhook to Telegram
-- **[V40 build log](https://github.com/jonesmarquise31/Radar-Platform/blob/main/build-log/v40-funnel-friction.md)** — funnel friction reduction: name-only entry, results gated behind account creation, phone removal across paid flows
-- **[Brand system](https://github.com/jonesmarquise31/Radar-Platform/blob/main/design/brand-system.md)** — typography hero, four-color palette, V39.1 stat block treatment, the deliberate rejection of SaaS chrome
-- **[Engineering patterns](https://github.com/jonesmarquise31/Radar-Platform/tree/main/patterns)** — verify-before-write with Stripe, idempotent submissions, real-time buy alerts
+**[fantasy-football-intelligence-engine](https://github.com/jonesmarquise31/fantasy-football-intelligence-engine)**
+— Underwriter v1, a native macOS draft application. A pywebview shell over a
+Python engine that prices player scarcity by value over replacement rather than
+projected points, and adapts its recommendations to the shape of a specific
+draft slot. Different domain, same habit: find where the conventional number is
+misleading, and build the one that isn't.
 
-### Stack
+The Workforce Radar platform itself — the diagnostic engine, the classification
+core, the dataset of 250+ classified IT, cybersecurity, and finance
+professionals — stays private. The architecture is public; the proprietary core
+is not.
 
-TypeScript, Node.js, Supabase (Postgres + Auth + RLS, private storage with deny-all-except-service-role), Netlify (functions, hosting, edge), Stripe (Checkout + webhooks), Anthropic API (Claude), Telegram Bot API for operational alerts, n8n for orchestration, Python where it earns its place.
+---
 
-### Frameworks
+## What I build with
 
-- **3C Framework (Career Chessboard)** — tactical positioning: CEO of Your Own Career, Consultant Mindset, Control the Narrative
-- **Abundance Mindset Reframe (AMR)** — psychological operating system for career operators
+Python, JavaScript, and Node on the serverless side. Postgres with row-level
+security. Stripe for payments. The Anthropic API where generation earns its
+place, and deterministic logic everywhere it does not. Playwright for
+acquisition. PyInstaller when something needs to become an application someone
+can double-click.
 
-Frameworks are delivered to Full System buyers as part of the Radar engagement.
+The pattern across all of it: understand the domain first, keep the expensive
+path bounded, and make the system explain its own reasoning so a person can
+disagree with it.
 
-### Elsewhere
+---
+
+## What's coming
+
+More of the same in both directions. Tooling for the IT and security work I do
+during the day, and projects for the things I care about outside it — sports
+analytics, fitness, whatever problem is currently annoying me enough to build
+for. The domain changes; the approach does not. I would rather ship a working
+system in an unfamiliar area than write a clean abstraction over a problem I
+have not actually had.
+
+---
+
+## Elsewhere
 
 - [workforceradar.com](https://workforceradar.com) — the platform
-- [radar-decode.netlify.app](https://radar-decode.netlify.app) — the Decode
-- [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117) — long-form thinking on hiring systems and career intelligence
+- [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117) — long-form on hiring systems and career strategy
+
+Open to contract, partnership, and full-time work. Reach me through LinkedIn.
