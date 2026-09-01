@@ -1,6 +1,6 @@
 # Marquise Jones
 
-I build complete AI products by myself, because I want them to exist. Not
+I build complete AI products because I want them to exist. Not
 prototypes and not demos: a model in production generating deliverables that
 people paid for, money moving through Stripe, customer data under row level
 security, and an on call rotation of one.
