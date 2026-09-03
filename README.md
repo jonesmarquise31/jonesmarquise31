@@ -1,24 +1,20 @@
 # Marquise Jones
 
-I build AI systems that have to survive constraints most AI never meets:
-accredited networks, hardened baselines, no reachable package index, and an
-ISSO who needs an audit trail for every artifact the system produces.
+DoD IT by day. I build AI systems because I like working out how they behave
+when they actually have to hold: when money moves through them, when the data
+belongs to somebody, when a person is going to read the output and act on it.
 
-That comes from doing both halves. I run a production AI platform with paying
-customers, alone, from schema to checkout to on call. I also automate the
-compliance machinery of DoD environments: STIG delta scoring, ACAS scan triage,
-and eMASS POA&M generation.
-
-Most people have one half.
+Most of that has gone into one platform. Some of it has gone into compliance
+tooling for the environments I work in. The rest is whatever I am curious about
+at the time.
 
 ---
 
-## Defense environments
+## Compliance automation
 
-Two public tools, both with tests and CI, both built around the same
-constraint: the answer has to hold up in front of an auditor.
+Two tools for the paperwork side of hardening, both with tests and CI.
 
-**Compliance automation.** XCCDF 1.2 results parsing straight out of OpenSCAP
+**What they do.** XCCDF 1.2 results parsing straight out of OpenSCAP
 and SCC, CCI normalisation across the four formats ACAS exports them in,
 CCI to NIST SP 800-53 Rev 5 correlation, DoD CAT rating derivation, and eMASS
 POA&M artifacts whose column order matches the import template. A PPS
@@ -156,14 +152,14 @@ architecture is public. The proprietary core is not.
 
 ---
 
-## Outside that
+## Side projects
 
-I write on LinkedIn and Substack about the extinction of the W2 layer and what
-replaces it, and I build tools for the operators I write for. The rest is
-whatever has my attention: sports analytics, fitness, any problem annoying
-enough to be worth a weekend. The domain changes and the approach does not. I
-would rather ship a working system in an unfamiliar area than write a clean
-abstraction over a problem I have never actually had.
+I write on LinkedIn and Substack about the extinction of the W2 layer, and I
+build tools for the people I write for. Past that it is sports analytics,
+fitness, and whatever else is annoying me enough to be worth a weekend. The
+domain changes and the approach does not. I would rather ship a working system
+in an unfamiliar area than write a clean abstraction over a problem I have
+never actually had.
 
 ---
 
@@ -172,7 +168,4 @@ abstraction over a problem I have never actually had.
 - [workforceradar.com](https://workforceradar.com), the platform
 - [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117), long form on hiring systems and career strategy
 
-None of this was commissioned. I build these because I want them to exist, and
-they tend to end up with customers anyway. If you are putting AI into an
-environment that has an accreditation boundary around it, LinkedIn is the
-fastest way to reach me.
+None of this was commissioned. I build them because I want them to exist.
