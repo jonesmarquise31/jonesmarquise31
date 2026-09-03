@@ -1,18 +1,55 @@
 # Marquise Jones
 
-I build complete AI products because I want them to exist. Not
-prototypes and not demos: a model in production generating deliverables that
-people paid for, money moving through Stripe, customer data under row level
-security, and an on call rotation of one.
+I build AI systems that have to survive constraints most AI never meets:
+accredited networks, hardened baselines, no reachable package index, and an
+ISSO who needs an audit trail for every artifact the system produces.
 
-What that actually took is below.
+That comes from doing both halves. I run a production AI platform with paying
+customers, alone, from schema to checkout to on call. I also automate the
+compliance machinery of DoD environments: STIG delta scoring, ACAS scan triage,
+and eMASS POA&M generation.
+
+Most people have one half.
 
 ---
 
-## The technical work
+## Defense environments
 
-Most of it comes out of [Workforce Radar](https://workforceradar.com), a career
-intelligence platform I built and run alone, schema to checkout to deploy.
+Two public tools, both with tests and CI, both built around the same
+constraint: the answer has to hold up in front of an auditor.
+
+**Compliance automation.** XCCDF 1.2 results parsing straight out of OpenSCAP
+and SCC, CCI normalisation across the four formats ACAS exports them in,
+CCI to NIST SP 800-53 Rev 5 correlation, DoD CAT rating derivation, and eMASS
+POA&M artifacts whose column order matches the import template. A PPS
+pre-flight takes a read only census of listening services before hardening
+severs the ones the enclave exists to run.
+
+**Nothing is silently dropped or silently guessed.** An unresolvable CCI is
+emitted as UNMAPPED and counted, never defaulted to a plausible control,
+because a wrong control on a POA&M item misleads the authorizing official. A
+port that cannot be probed is UNKNOWN, never CLOSED, because treating an
+unreachable host as quiet would green light a hardening run nobody inspected.
+Both rules exist because the opposite behaviour was in the code and I found
+what it did.
+
+**Deployability is a design constraint.** The STIG engine has zero third party
+dependencies. An air gapped enclave rarely has a reachable package index, and
+a compliance tool that cannot be installed where it is needed is not a
+compliance tool.
+
+**Reproducibility is enforced, not assumed.** The POA&M generator's output was
+varying between runs on identical input because host lists came out of a set.
+CI now fails if two runs under different hash seeds disagree. An audit artifact
+that changes when you regenerate it cannot be defended.
+
+---
+
+## Production AI systems
+
+Most of this comes out of [Workforce Radar](https://workforceradar.com), a
+career intelligence platform I built and run alone, schema to checkout to
+deploy.
 
 **Production LLM integration.** Claude generates paid deliverables inside
 background functions, behind Stripe checkout, for customers who paid for them.
@@ -86,24 +123,32 @@ the Anthropic API, Playwright, Twilio, GSAP, PyInstaller, GitHub Actions.
 
 ## What is here
 
-**[Radar-Platform](https://github.com/jonesmarquise31/Radar-Platform)** is the
-architecture record for the platform above. Build logs, numbered decision
-records, named engineering patterns, and the reasoning behind each. Start here
-if you want to see how I think about a system before writing it.
+**[stig-delta-engine](https://github.com/jonesmarquise31/stig-delta-engine)**
+scores DISA STIG remediation between two XCCDF scans and generates the eMASS
+POA&M for whatever is still open. Standard library only. 45 tests, CI on
+Python 3.9 through 3.13.
+
+**[acas-poam-generator](https://github.com/jonesmarquise31/acas-poam-generator)**
+turns a raw ACAS or Nessus export into a styled, importable POA&M workbook.
+Per host rows collapse to one record per finding, CCIs resolve to NIST
+controls, output is byte stable across runs. 61 tests, CI.
 
 **[radar-patterns](https://github.com/jonesmarquise31/radar-patterns)** is five
-production patterns extracted from that platform: webhook signature
+production patterns pulled out of the Radar platform: webhook signature
 verification, verify before write payment routing, idempotent writes under at
 least once delivery, deferred model generation, and request auth. Sixty tests,
-zero dependencies, runs with `npm test` in about a second. This is the
-implementation half of Radar-Platform's architecture half.
+zero dependencies, runs in about a second.
+
+**[Radar-Platform](https://github.com/jonesmarquise31/Radar-Platform)** is the
+architecture record behind that platform. Build logs, numbered decision
+records, named patterns, and the reasoning for each. Start here if you want to
+see how I think about a system before writing it.
 
 **[fantasy-football-intelligence-engine](https://github.com/jonesmarquise31/fantasy-football-intelligence-engine)**
-is Underwriter v1, a native macOS draft application. A pywebview shell over a
-Python engine that prices player scarcity by value over replacement rather than
-projected points, and adapts every recommendation to the shape of a specific
-draft slot. Different domain, same habit: find where the conventional number
-misleads, and build the one that does not.
+is a native macOS draft application. A pywebview shell over a Python engine
+that prices player scarcity by value over replacement rather than projected
+points. This one is for fun, and it still got shipped as a signed installable
+app rather than a script.
 
 The Radar diagnostic engine, the classification core, and the dataset of 250+
 classified IT, cybersecurity and finance professionals stay private. The
@@ -111,22 +156,23 @@ architecture is public. The proprietary core is not.
 
 ---
 
-## What is coming
+## Outside that
 
-More in both directions. Tooling for the IT and security work I do during the
-day, and projects for the things I care about outside it: sports analytics,
-fitness, whatever problem is currently annoying me enough to build for. The
-domain changes and the approach does not. I would rather ship a working system
-in an unfamiliar area than write a clean abstraction over a problem I have never
-actually had.
+I write on LinkedIn and Substack about the extinction of the W2 layer and what
+replaces it, and I build tools for the operators I write for. The rest is
+whatever has my attention: sports analytics, fitness, any problem annoying
+enough to be worth a weekend. The domain changes and the approach does not. I
+would rather ship a working system in an unfamiliar area than write a clean
+abstraction over a problem I have never actually had.
 
 ---
 
 ## Elsewhere
 
 - [workforceradar.com](https://workforceradar.com), the platform
-- [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117) and Substack, where I write about the extinction of the W2 layer and what replaces it
+- [LinkedIn](https://www.linkedin.com/in/marquise-jones-aa72a2117), long form on hiring systems and career strategy
 
 None of this was commissioned. I build these because I want them to exist, and
-they tend to end up with customers anyway. If your team is working on something
-shaped like it, LinkedIn is the fastest way to reach me.
+they tend to end up with customers anyway. If you are putting AI into an
+environment that has an accreditation boundary around it, LinkedIn is the
+fastest way to reach me.
