@@ -12,14 +12,27 @@ at the time.
 
 ## Compliance automation
 
-Two tools for the paperwork side of hardening, both with tests and CI.
+Three tools for the paperwork side of hardening, each with tests and CI. They
+line up against the front half of the RMF loop, which was not the plan so much
+as what happened once I automated the parts I kept doing by hand.
 
-**What they do.** XCCDF 1.2 results parsing straight out of OpenSCAP
-and SCC, CCI normalisation across the four formats ACAS exports them in,
-CCI to NIST SP 800-53 Rev 5 correlation, DoD CAT rating derivation, and eMASS
-POA&M artifacts whose column order matches the import template. A PPS
-pre-flight takes a read only census of listening services before hardening
-severs the ones the enclave exists to run.
+| Tool | Where it sits | What it produces |
+|---|---|---|
+| ssp-cis-builder | Select and Implement | SSP narrative and eMASS CIS matrix from a versioned manifest |
+| stig-delta-engine | Assess | Remediation scoring between two XCCDF scans, plus a POA&M for what is open |
+| acas-poam-generator | Assess and Monitor | ACAS or Nessus findings collapsed into an importable POA&M workbook |
+
+**What they do.** XCCDF 1.2 results parsing straight out of OpenSCAP and SCC,
+CCI normalisation across the four formats ACAS exports them in, CCI to NIST SP
+800-53 Rev 5 correlation, DoD CAT rating derivation, and eMASS artifacts whose
+column order matches the import template. A PPS pre-flight takes a read only
+census of listening services before hardening severs the ones the enclave
+exists to run.
+
+**The system description lives in one file.** ssp-cis-builder renders both
+documents from a YAML manifest under version control, so changing the boundary
+firewall once updates every control statement that references it. The SSP stops
+being a document somebody edits and starts being a build artifact.
 
 **Nothing is silently dropped or silently guessed.** An unresolvable CCI is
 emitted as UNMAPPED and counted, never defaulted to a plausible control,
@@ -38,6 +51,13 @@ compliance tool.
 varying between runs on identical input because host lists came out of a set.
 CI now fails if two runs under different hash seeds disagree. An audit artifact
 that changes when you regenerate it cannot be defended.
+
+**An incomplete document says so.** A manifest missing a field renders
+NOT SPECIFIED rather than the string None, and a control template naming a
+component nobody declared falls back to readable text instead of raising a
+KeyError halfway through the document. CI fails if the word None reaches a
+generated SSP. A visibly incomplete artifact is fixable; a quietly wrong one
+gets signed.
 
 ---
 
@@ -118,6 +138,12 @@ the Anthropic API, Playwright, Twilio, GSAP, PyInstaller, GitHub Actions.
 ---
 
 ## What is here
+
+**[ssp-cis-builder](https://github.com/jonesmarquise31/ssp-cis-builder)**
+renders an SSP summary and an eMASS CIS matrix from one YAML manifest. Fifteen
+Rev 5 controls across nine families, per control status and designation
+overrides validated against the eMASS enums. 96 tests at 100 percent coverage,
+enforced in CI.
 
 **[stig-delta-engine](https://github.com/jonesmarquise31/stig-delta-engine)**
 scores DISA STIG remediation between two XCCDF scans and generates the eMASS
