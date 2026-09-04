@@ -12,16 +12,17 @@ at the time.
 
 ## Compliance automation
 
-Three tools for the paperwork side of hardening, each with tests and CI. They
-cover the documentation and evidence spine of RMF: Implement, Assess, and the
-POA&M side of Monitor. Categorize and Authorize are judgment calls with
-signatures on them, not automation targets.
+Four tools for the paperwork side of hardening, each with tests and CI. They
+cover the documentation and evidence spine: Implement, Assess, and Monitor.
+Categorize and Authorize are judgment calls with signatures on them, not
+automation targets.
 
-| Tool | RMF step | What it produces |
+| Tool | Step | What it produces |
 |---|---|---|
 | ssp-cis-builder | 3, Implement | SSP narrative and eMASS CIS matrix from a versioned manifest |
 | stig-delta-engine | 4, Assess | Remediation scoring between two XCCDF scans, plus a POA&M for what is open |
 | acas-poam-generator | 4 and 6, Assess and Monitor | ACAS or Nessus findings collapsed into an importable POA&M workbook |
+| jsig-conmon-engine | 6, Monitor | Recurring AC-2, AC-6 and AU-6 review, and the summary an ISSO signs |
 
 None of this was planned as a suite. It is what happened after automating the
 parts I kept doing by hand.
@@ -31,20 +32,31 @@ CCI normalisation across the four formats ACAS exports them in, CCI to NIST SP
 800-53 Rev 5 correlation, DoD CAT rating derivation, and eMASS artifacts whose
 column order matches the import template. A PPS pre-flight takes a read only
 census of listening services before hardening severs the ones the enclave
-exists to run.
+exists to run. On the monitoring side, /etc/passwd and /etc/group parsed
+natively, with administrative privilege resolved through both supplementary
+group membership and primary GID, because a user whose primary group is wheel
+appears in no member list anywhere.
 
 **The system description lives in one file.** ssp-cis-builder renders both
 documents from a YAML manifest under version control, so changing the boundary
 firewall once updates every control statement that references it. The SSP stops
 being a document somebody edits and starts being a build artifact.
 
-**Nothing is silently dropped or silently guessed.** An unresolvable CCI is
-emitted as UNMAPPED and counted, never defaulted to a plausible control,
-because a wrong control on a POA&M item misleads the authorizing official. A
-port that cannot be probed is UNKNOWN, never CLOSED, because treating an
-unreachable host as quiet would green light a hardening run nobody inspected.
-Both rules exist because the opposite behaviour was in the code and I found
-what it did.
+**Indeterminate is not compliant.** This is the rule the whole set is built
+around, and every instance of it exists because the opposite behaviour was in
+the code and I found what it did.
+
+An unresolvable CCI is emitted as UNMAPPED and counted, never defaulted to a
+plausible control, because a wrong control on a POA&M item misleads the
+authorizing official. A port that cannot be probed is UNKNOWN, never CLOSED,
+because an unreachable host reading as quiet would green light a hardening run
+nobody inspected. A missing manifest field renders NOT SPECIFIED rather than
+the string None. An account with no login history is INDETERMINATE, not zero
+days idle, which is what the code used to do and which meant it cleared the
+inactivity check silently.
+
+That last one is the reason the rule is stated first. A monitoring tool that
+manufactures evidence of a control working is worse than no tool.
 
 **Deployability is a design constraint.** The STIG engine has zero third party
 dependencies. An air gapped enclave rarely has a reachable package index, and
@@ -55,6 +67,11 @@ compliance tool.
 varying between runs on identical input because host lists came out of a set.
 CI now fails if two runs under different hash seeds disagree. An audit artifact
 that changes when you regenerate it cannot be defended.
+
+**A corrupt line is not a stopped run.** A ConMon pass across four hundred
+hosts cannot abort because one passwd record has six fields instead of seven.
+Malformed lines are skipped, counted, and reported with their line number, so
+partial data still gets audited and the gap is still visible.
 
 **An incomplete document says so.** A manifest missing a field renders
 NOT SPECIFIED rather than the string None, and a control template naming a
@@ -142,6 +159,13 @@ the Anthropic API, Playwright, Twilio, GSAP, PyInstaller, GitHub Actions.
 ---
 
 ## What is here
+
+**[jsig-conmon-engine](https://github.com/jonesmarquise31/jsig-conmon-engine)**
+runs the recurring account and audit review. Parses /etc/passwd and
+/etc/group, evaluates AC-2 inactivity, AC-6 privilege, and AU-6 logging
+capability, and emits both a finding set and the Markdown summary a reviewer
+signs. Catches the configured-but-silent syslog stream, which is the audit
+failure that hides. 118 tests at 100 percent coverage.
 
 **[ssp-cis-builder](https://github.com/jonesmarquise31/ssp-cis-builder)**
 renders an SSP summary and an eMASS CIS matrix from one YAML manifest. Fifteen
