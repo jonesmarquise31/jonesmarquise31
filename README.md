@@ -13,14 +13,18 @@ at the time.
 ## Compliance automation
 
 Three tools for the paperwork side of hardening, each with tests and CI. They
-line up against the front half of the RMF loop, which was not the plan so much
-as what happened once I automated the parts I kept doing by hand.
+cover the documentation and evidence spine of RMF: Implement, Assess, and the
+POA&M side of Monitor. Categorize and Authorize are judgment calls with
+signatures on them, not automation targets.
 
-| Tool | Where it sits | What it produces |
+| Tool | RMF step | What it produces |
 |---|---|---|
-| ssp-cis-builder | Select and Implement | SSP narrative and eMASS CIS matrix from a versioned manifest |
-| stig-delta-engine | Assess | Remediation scoring between two XCCDF scans, plus a POA&M for what is open |
-| acas-poam-generator | Assess and Monitor | ACAS or Nessus findings collapsed into an importable POA&M workbook |
+| ssp-cis-builder | 3, Implement | SSP narrative and eMASS CIS matrix from a versioned manifest |
+| stig-delta-engine | 4, Assess | Remediation scoring between two XCCDF scans, plus a POA&M for what is open |
+| acas-poam-generator | 4 and 6, Assess and Monitor | ACAS or Nessus findings collapsed into an importable POA&M workbook |
+
+None of this was planned as a suite. It is what happened after automating the
+parts I kept doing by hand.
 
 **What they do.** XCCDF 1.2 results parsing straight out of OpenSCAP and SCC,
 CCI normalisation across the four formats ACAS exports them in, CCI to NIST SP
